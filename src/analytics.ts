@@ -30,20 +30,31 @@ function collectAnalytics(){
     }
 }
 
-function sendCollectionReport(){
+function sendCollectionReport(tag: string){
     fetch(
-        `https://weblytics.ws/report?tag=nu3Iuzo5AiP0doovieV6kohxaVecughiluid7gaix6aiwahshiezee6iochuvai7`,
+        `https://weblytics.ws/report?tag=${tag}`,
         {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
-                'Report-Key': 'appId'
             }
         }
     )
     .then((done) => {
-
+        console.log()
     })
 }
 
-sendCollectionReport();
+function launchReporter(){
+    let script = document.querySelector("#weblytics-reporter") as HTMLScriptElement;
+    if(script){
+        let tag = script.dataset.tag as string;
+        if(tag) {
+            sendCollectionReport(tag);
+        }
+    }
+}
+
+document.addEventListener("load", (ev) => {
+    launchReporter();
+})
