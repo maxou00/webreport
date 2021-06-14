@@ -1,4 +1,13 @@
 function collectAnalytics(){
+    let navigatorExtras: any = {};
+    let anyfied = navigator as any;
+    if(anyfied.connection) {
+        navigatorExtras.connection = {
+            effectiveType: anyfied.connection.effectiveType, // 2g 3g 4g
+            type: anyfied.connection.type /// wifi bluetooth ethernet wimax...
+        }
+    }
+
     return {
         pageTitle: document.title,
         location: {
@@ -18,14 +27,14 @@ function collectAnalytics(){
             pixelDepth: screen.pixelDepth
         },
         navigator: {
-            appCodeName: navigator.appCodeName,
-            appName: navigator.appName,
             version: navigator.appVersion,
-            product: navigator.product,
-            platform: navigator.platform,
+            vendor: navigator.vendor,
             language: navigator.language,
-            languages: navigator.languages,
-            webdriver: navigator.webdriver
+            webdriver: navigator.webdriver,
+            userAgent: navigator.userAgent,
+            maxTouchPoints: navigator.maxTouchPoints,
+            concurrency: navigator.hardwareConcurrency,
+            extras: navigatorExtras
         }
     }
 }
@@ -41,7 +50,7 @@ function sendCollectionReport(tag: string){
         }
     )
     .then((done) => {
-        console.log()
+        console.log("Sent Report to weblytics");
     })
 }
 
