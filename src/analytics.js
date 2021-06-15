@@ -1,6 +1,4 @@
-(async () => {
-    const REPORT_TAG = "reportingtag";
-
+(async (url, tag) => {
     const collectAnalytics = () => {
         let navigatorExtras = {};
         let anyfied = navigator;
@@ -42,21 +40,17 @@
         }
     }
 
-    const sendCollectionReport = async() => {
-        return fetch(
-            `https://www.traffichub.co/report?tag=${REPORT_TAG}`,
-            {
-                method: "POST",
-                body: collectAnalytics(),
-                headers: {
-                    'Content-Type': 'application/json;charset=utf-8',
-                }
+    return fetch(
+        `${url}/report?tag=${tag}`,
+        {
+            method: "POST",
+            body: JSON.stringify(collectAnalytics()),
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
             }
-        )
-        .then((done) => {
-            console.log("Sent Report to TrafficHub");
-        })
-    }
-
-    await sendCollectionReport();
+        }
+    )
+    .then((done) => {
+        console.log("Sent Report to TrafficHub");
+    })
 })();
