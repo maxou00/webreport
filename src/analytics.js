@@ -1,4 +1,4 @@
-async function __start_report() {
+(async () => {
     const REPORT_TAG = "reportingtag";
 
     const collectAnalytics = () => {
@@ -59,5 +59,4 @@ async function __start_report() {
     }
 
     await sendCollectionReport();
-}
-__start_report();
+})();
